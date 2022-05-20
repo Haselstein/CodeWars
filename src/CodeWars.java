@@ -7,7 +7,7 @@ public class CodeWars {
 
         //System.out.println("persistence = " + persistence(441888));
 
-        System.out.println(digital_root(347149));
+        System.out.println("digital_root = " + digital_root(347149));
 
 
         
