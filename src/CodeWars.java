@@ -1,3 +1,10 @@
+import java.security.DrbgParameters.Reseed;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.IntStream;
+
 public class CodeWars {
     public static void main(String[] args) throws Exception {
         /* int[] a = {30, 27, 8, 14, 7};
@@ -7,14 +14,16 @@ public class CodeWars {
 
         //System.out.println("persistence = " + persistence(441888));
 
-        System.out.println("digital_root = " + digital_root(347149));
+        //System.out.println("digital_root = " + digital_root(347149));
 
+        //int[] ls = {0, 1, 3, 6, 10};
+        //System.out.println(sumParts(ls));
 
+        System.out.println(countPairsInt(3, 100)); 
         
     }
     
     public static long[] bonus(int[] arr, long s) {
-        //6kyu
         //Вычисление бонусов сотрудникам, исходя из количества дней, которые работник отсутствовал на рабочем месте
         //Массив arr - количество пропусков
         //Размер массива arr - количество сотрудников
@@ -82,7 +91,6 @@ public class CodeWars {
         //Цифровой корень
         //Находит однозначное число по сумме исходных значений
         //Пример: 982 -> 9+8+2 = 19 -> 1+9 = 10 -> 1+0 = 1
-        //Проверить однострочный вариант, в теории должен работать return (n != 0 && n%9 == 0) ? 9 : n % 9;
         if (n < 10)
             return n;
 
@@ -95,4 +103,47 @@ public class CodeWars {
         n = sum;
         return digital_root(n);
     }
+
+    public static int[] sumParts(int[] ls) {
+        //Сумма чисел массива, начиная с конца, заканчивая нулём
+        //Например: 
+        //ls = [0, 1, 3, 6, 10] result = [0]
+        //ls = [1, 3, 6, 10]    result = [0, 10]
+        //ls = [3, 6, 10]       result = [0, 10, 16]
+        //ls = [6, 10]          result = [0, 10, 16, 19]
+        //ls = [10]             result = [0, 10, 16, 19, 20]
+        //ls = []               result = [0, 10, 16, 19, 20, 20]
+
+        int[] result = new int[ls.length+1];
+
+        for (int i = ls.length-1; i >= 0; --i) 
+            result[i] = result[i+1] + ls[i];
+        
+        return result;
+    }
+
+
+    public static int countDivisors(int number) {
+        int result = 1; //=1, чтобы учитывать само число
+        for (int i = 1; i <= number/2; i++) 
+            if ((number % i) == 0) {
+                result++;
+            }
+        return result;
+    }
+
+    public static int countPairsInt(int diff, long nMax) {
+        //Количество таких чисел, разница между которыми равна diff,
+        //не превышающие nMax, и имеющих одинаковое количество делителей
+
+        int count = 0;
+
+        for (int i = 1; i < nMax-diff; i++) {
+            if (countDivisors(i) == countDivisors(i+diff))
+                count++;
+        }
+
+        return count;
+    }
+
 }
