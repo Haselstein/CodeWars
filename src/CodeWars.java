@@ -1,8 +1,12 @@
 import java.security.DrbgParameters.Reseed;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class CodeWars {
@@ -19,8 +23,18 @@ public class CodeWars {
         //int[] ls = {0, 1, 3, 6, 10};
         //System.out.println(sumParts(ls));
 
-        System.out.println(countPairsInt(3, 100)); 
-        
+        //System.out.println(countPairsInt(3, 100));
+
+        int[] a = {1,2,2};
+        int[] b = {2};
+        /* int[] a = new int[5];
+        int[] b = new int[5];
+        for(int i = 0; i < 5; i++) {
+            a[i] = i;
+            b[i] = 7;
+        } */
+        System.out.println(arrayDiff(a, b));
+         
     }
     
     public static long[] bonus(int[] arr, long s) {
@@ -145,5 +159,38 @@ public class CodeWars {
 
         return count;
     }
+
+    public static int[] arrayDiff(int[] a, int[] b) {
+        //Array diff. Вычитание матрицы b из матрицы a с сохранением порядка
+        //Также сохраняет количество повторяющихся элементов(Нужно по заданию)
+
+        ArrayList<Integer> alist = new ArrayList<Integer>();
+        ArrayList<Integer> blist = new ArrayList<Integer>();
+        for (int i = 0; i < a.length; i++)
+            alist.add(a[i]);
+        for (int i = 0; i < b.length; i++)
+            blist.add(b[i]);
+        //System.out.println("list of a: " + alist.toString());
+        //System.out.println("list of b: " + blist.toString());
+        List<Integer> newList = blist.stream().distinct().collect(Collectors.toList());
+        //System.out.println("New list: " + newList);
+        //System.out.println("Size of new list = " + newList.size());
+        //System.out.println("Get new list index 3 = " + alist.get(index));
+        //System.out.println("alist size 1 = " + alist.size());
+        for (int j = 0; j < newList.size(); j++)
+            for (int i = alist.size()-1; i >= 0; i--)
+                if (alist.get(i) == newList.get(j)) 
+                   alist.remove(i);
+                   //System.out.println("list of a: " + alist.toString());
+        System.out.println("result: " + alist.toString());
+        //System.out.println("list of a: " + alist.toString());
+        int[] result = new int[alist.size()];
+        //System.out.println("alist size 2 = " + alist.size());
+        for (int i = 0; i < alist.size(); i++)
+            result[i] = alist.get(i);
+        return result;
+    }
+
+    
 
 }
