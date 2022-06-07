@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 
 public class CodeWars {
     public static void main(String[] args) throws Exception {
-        
+
         /* int[] a = {30, 27, 8, 14, 7};
         bonus(a, 34067); */
 
@@ -29,6 +29,10 @@ public class CodeWars {
         /* int[] a = {1,2,2};
         int[] b = {2};
         System.out.println(arrayDiff(a, b)); */
+
+        /* String[] b = {"red", "green", "blue", "blue", "red", "green", "red", "red", "red"};
+        int a = numberOfPairs(b);
+        System.out.println(a); */
          
     }
     
@@ -189,4 +193,28 @@ public class CodeWars {
 
         return result;
     }
+
+    public static int numberOfPairs(String[] gloves) {
+        //Имеется массив с разноцветными перчатками
+        //Нужно посчитать и вернуть количество одноцветных пар
+        
+        int result = 0;
+        
+        Arrays.sort(gloves);
+        
+        int i = 0;//?
+        while (i < gloves.length-1) {
+            if (gloves[i].equals(gloves[i+1])) {
+                result++;
+                i += 2;
+            }
+            else {
+                i++;
+            }
+        }
+
+        return result;
+    }
+
+
 }
