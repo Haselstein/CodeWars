@@ -33,6 +33,15 @@ public class CodeWars {
         /* String[] b = {"red", "green", "blue", "blue", "red", "green", "red", "red", "red"};
         int a = numberOfPairs(b);
         System.out.println(a); */
+
+        //long[] a = {8,8,8,8,8,8,8,8,8,8,8,8,8,8,8};
+        //System.out.println("a = " + divideAndMultipy(a));
+
+        //int[][] a = new int[][] { {1,2}, {2,9}, {3,18}, {4,24}, {6,48} };
+        //int[][] a = new int[][] { {1, 3}, {5, 3} };
+        int[][] a = new int[][] { {69, 130}, {87, 1310}, {3, 4} };
+        System.out.println(sumFracts(a));
+        
          
     }
     
@@ -59,6 +68,7 @@ public class CodeWars {
 
     }
 
+
     public static int multiples(int number) {
         //Складывает все числа, кратные 3 или 5, вплоть до number
 
@@ -75,6 +85,7 @@ public class CodeWars {
         return sum;
 
     }
+
 
     public static int persistence(long n) {
         //"Стойкость" числа. Количество итераций умножения цифр числа до 1 цифры
@@ -101,6 +112,7 @@ public class CodeWars {
 
     }
 
+
     public static int digital_root(int n) {
         //Цифровой корень
         //Находит однозначное число по сумме исходных значений
@@ -122,6 +134,7 @@ public class CodeWars {
 
     }
 
+
     public static int[] sumParts(int[] ls) {
         //Сумма чисел массива, начиная с конца, заканчивая нулём
         //Например: 
@@ -139,6 +152,7 @@ public class CodeWars {
         
         return result;
     }
+
 
     public static int countDivisors(int number) {
         //подсчёт количества делителей числа number
@@ -167,6 +181,7 @@ public class CodeWars {
         return count;
     }
 
+
     public static int[] arrayDiff(int[] a, int[] b) {
         //Array diff. Вычитание матрицы b из матрицы a с сохранением порядка
         //Также сохраняет количество повторяющихся элементов(Нужно по заданию)
@@ -194,6 +209,7 @@ public class CodeWars {
         return result;
     }
 
+
     public static int numberOfPairs(String[] gloves) {
         //Имеется массив с разноцветными перчатками
         //Нужно посчитать и вернуть количество одноцветных пар
@@ -215,6 +231,95 @@ public class CodeWars {
 
         return result;
     }
+
+
+    public static String sumFracts(int[][] l) {
+        //Калькулятор дробей
+        //На вход подаётся двумерный массив
+        //элементы которого - дроби, представленные в виде {числитель, знаменатель}
+        //Найти сумму дробей
+
+        if (l.length < 1)
+            return null;
+
+        if (l.length < 2)
+            return "[" + l[0][0] + ", " + l[0][1] + "]";
+        
+        String answer;
+
+        int[] a = new int[l.length];    //Массив всех знаменателей
+        for (int i = 0; i < a.length; i++) {
+            a[i] = l[i][1];
+        }
+        int b = findLeastCommonMultiple(a); //Общий знаменатель
+
+        int temp_1 = 0; //i-й числитель
+        int sum = 0;    //Сумма всех числителей
+        for (int i = 0; i < l.length; i++) {
+            temp_1 = b / l[i][1] * l[i][0];
+            sum += temp_1;
+        }
+
+        while (findGreatestCommonDivisor(sum, b) != 1) {//Сокращение дроби, если возможно
+            int divider = findGreatestCommonDivisor(sum, b);
+            sum /= divider;
+            b /= divider;
+        }
+
+        if (sum %b == 0)
+            answer = "" + (sum/b);
+        else
+            answer = "[" + sum + ", " + b + "]";
+
+        return answer;
+
+    }
+    public static int findGreatestCommonDivisor(int a, int b) {
+        //Поиск наибольшего общего делителя двух чисел
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+    public static int findGreatestCommonDivisor(int[] sourceNumbers) {
+        ////Поиск наибольшего общего делителя массива чисел
+        int result = sourceNumbers[0];
+        if (result == 0) {
+            System.out.println("Наибольший общий делитель: " + result);
+        } else {
+            for (int i = 1; i < sourceNumbers.length; i++) {
+                result = findGreatestCommonDivisor(result, sourceNumbers[i]);
+            }
+            System.out.println("Наибольший общий делитель: " + result);
+        }
+        return result;
+    }
+    public static int findLeastCommonMultiple(int a, int b) {
+        //Поиск наименьшего общего кратного двух чисел
+        return a * (b / findGreatestCommonDivisor(a, b));
+    }
+    public static int findLeastCommonMultiple(int[] sourceNumbers) {
+        //Поиск наименьшего общего кратного массива чисел
+        int result = sourceNumbers[0];
+        if (result == 0) {
+            System.out.println("Наименьшее общее кратное: " + result);
+        } else {
+            for (int i = 1; i < sourceNumbers.length; i++) {
+                if (sourceNumbers[i] == 0) {
+                    break;
+                }
+                result = findLeastCommonMultiple(result, sourceNumbers[i]);
+            }
+        }
+        System.out.println("Наименьшее общее кратное: " + result);
+        return result;
+    }
+
+
+    //public static int SomeName() {
+    //}
 
 
 }
