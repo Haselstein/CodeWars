@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+
 public class CodeWars {
     public static void main(String[] args) throws Exception {
 
@@ -39,9 +40,14 @@ public class CodeWars {
 
         //int[][] a = new int[][] { {1,2}, {2,9}, {3,18}, {4,24}, {6,48} };
         //int[][] a = new int[][] { {1, 3}, {5, 3} };
-        int[][] a = new int[][] { {69, 130}, {87, 1310}, {3, 4} };
-        System.out.println(sumFracts(a));
-        
+        //int[][] a = new int[][] { {69, 130}, {87, 1310}, {3, 4} };
+        //System.out.println(sumFracts(a));
+
+        String a[] = new String[] { "arp", "live", "strong" };
+        String b[] = new String[] { "lively", "alive", "harp", "sharp", "armstrong" };
+        String r[] = new String[] { "arp", "live", "strong" };
+
+        System.out.println(inArray(a, b));
          
     }
     
@@ -284,7 +290,7 @@ public class CodeWars {
         return a;
     }
     public static int findGreatestCommonDivisor(int[] sourceNumbers) {
-        ////Поиск наибольшего общего делителя массива чисел
+        //Поиск наибольшего общего делителя массива чисел
         int result = sourceNumbers[0];
         if (result == 0) {
             System.out.println("Наибольший общий делитель: " + result);
@@ -318,8 +324,34 @@ public class CodeWars {
     }
 
 
-    //public static int SomeName() {
-    //}
+
+    public static String[] inArray(String[] array1, String[] array2) {
+        //Метод возвращает массив строк, каждый элемент которого является
+        //вхождением элементов массива array1 в любой из элементов массива array2
+        //Результат отсортирован и без дубликатов
+        //Например:
+        // array1 = { "arp", "live", "strong" }
+        // array2 = { "harp", "karp", "alive", "stronger" }
+        // result = { "arp", "live", "strong" }
+
+        ArrayList<String> result = new ArrayList<String>();
+
+        for (int j = 0; j < array2.length; j++)
+            for (int i = 0; i < array1.length; i++)
+                if (array2[j].contains(array1[i]))
+                    result.add(array1[i]);
+
+        Collections.sort(result);
+
+        List<String> newResult = result.stream().distinct().collect(Collectors.toList());
+
+        String[] answer = new String[newResult.size()];
+        for (int i = 0; i < newResult.size(); i++)
+            answer[i] = newResult.get(i);
+
+
+        return answer;
+    }
 
 
 }
