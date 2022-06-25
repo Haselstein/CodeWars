@@ -1,13 +1,9 @@
 import java.security.DrbgParameters.Reseed;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.function.Function;
+import static java.util.stream.Collectors.*;
 
 
 public class CodeWars {
@@ -43,14 +39,36 @@ public class CodeWars {
         //int[][] a = new int[][] { {69, 130}, {87, 1310}, {3, 4} };
         //System.out.println(sumFracts(a));
 
-        String a[] = new String[] { "arp", "live", "strong" };
+        /*String a[] = new String[] { "arp", "live", "strong" };
         String b[] = new String[] { "lively", "alive", "harp", "sharp", "armstrong" };
         String r[] = new String[] { "arp", "live", "strong" };
+        printMatrix(inArray(a, b));*/
 
-        System.out.println(inArray(a, b));
+        /*int[] a = {2, 4, 5, 4, 7, 9, 5, 4, 7};
+        int[] b = sortByFrequency(a);
+        //printMatrix(b);*/
+
+        /*int a = 70304;
+        System.out.println(expandedNumber(a));*/
+
+        int[] a = {1, 2, 3};
+        System.out.println(sumDig_nthTerm(10, a, 6));
          
     }
-    
+
+    public static void printMatrix(String[] a) {
+        //Сделать универсальным для всех типов матриц
+        for (String element : a) {
+            System.out.println(element);
+        }
+    }
+    public static void printMatrix(int[] a) {
+        for (int element : a) {
+            System.out.println(element);
+        }
+    }
+
+
     public static long[] bonus(int[] arr, long s) {
         //Вычисление бонусов сотрудникам, исходя из количества дней, которые работник отсутствовал на рабочем месте
         //Массив arr - количество пропусков
@@ -324,7 +342,6 @@ public class CodeWars {
     }
 
 
-
     public static String[] inArray(String[] array1, String[] array2) {
         //Метод возвращает массив строк, каждый элемент которого является
         //вхождением элементов массива array1 в любой из элементов массива array2
@@ -349,9 +366,71 @@ public class CodeWars {
         for (int i = 0; i < newResult.size(); i++)
             answer[i] = newResult.get(i);
 
-
         return answer;
     }
 
+
+    public static String expandedNumber(int a) {
+        //Развёрнутая запись числа "a" в виде строки
+
+        ArrayList<Integer> array = new ArrayList<>();
+        ArrayList<String> arrayString = new ArrayList<>();
+        String b = null;
+        int i = 0;
+
+        while (a > 0) {
+            if (a %10 != 0) {
+                array.add((int)(a%10 * (Math.pow(10,i))));
+            }
+            a /= 10;
+            i++;
+        }
+
+        Collections.sort(array, Collections.reverseOrder());
+        for (int j = 0; j < array.size(); j++) {
+            arrayString.add(array.get(j).toString());
+        }
+        String arrayToString = String.join(" + ", arrayString);
+
+        return  arrayToString;
+
+    }
+
+
+    public static int sumDig_nthTerm(int initVal, int[] patternL, int nthTerm) {
+        //Имеется последовательность:
+        //term1 = initVal
+        //term2 - term1 = k1
+        //term3 - term2 = k2
+        //term4 - term3 = k3
+        //term5 - term4 = k4
+        //...
+        //Где patternL = [k1, k2, k3, k4, ...]
+        //Найти сумму цифр числа nthTerm(порядковый номер числа последовательности) в этой последовательности
+        int i = 0;
+        int n = 0;
+        int nextNumber = initVal;
+
+        while (n < nthTerm-1) {
+            n++;
+            nextNumber += patternL[i];
+            if ((i+1) == patternL.length)
+                i = 0;
+            else
+                i++;
+        }
+
+        return sumOfTheDigits(nextNumber);
+
+    }
+    public static int sumOfTheDigits(int a) {
+        //Сумма цифр числа
+        int sum = 0;
+        while(a > 0) {
+            sum += a%10;
+            a /= 10;
+        }
+        return sum;
+    }
 
 }
