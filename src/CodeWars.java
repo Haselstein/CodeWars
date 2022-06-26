@@ -51,8 +51,17 @@ public class CodeWars {
         /*int a = 70304;
         System.out.println(expandedNumber(a));*/
 
-        int[] a = {1, 2, 3};
-        System.out.println(sumDig_nthTerm(10, a, 6));
+        /*int[] a = {1, 2, 3};
+        System.out.println(sumDig_nthTerm(10, a, 6));*/
+
+        /*System.out.println(playingWithDigits(89, 1));
+        System.out.println(playingWithDigits(92, 1));
+        System.out.println(playingWithDigits(695, 2));
+        System.out.println(playingWithDigits(46288, 3));*/
+
+        for (int i = -5; i < 102; i++)
+            System.out.println("Number " + i + " is prime?: " + isPrime(i));
+
          
     }
 
@@ -433,4 +442,50 @@ public class CodeWars {
         return sum;
     }
 
+
+    public static int playingWithDigits(int num, int n) {
+        //На вход поступает число и номер первой степени
+        //Нужно разложить число на его цифры
+        //Слева направо возвести каждую цифру в степень n + порядковый номер
+        //Просуммировать все числа. Если сумма делится нацело на изначальное число, то вернуть результат деления
+        //Иначе вернуть -1
+        //Например:
+        //(695, 2): 6^2 + 9^3 + 5^4 = 1390 = 695*2 -> вернуть 2
+
+        int sum = 0;
+        int i = (int) (Math.log10(num));
+        int sourceNum = num;
+
+        while (num > 0) {
+            sum += Math.pow((num%10), (n+i));
+            num /= 10;
+            i--;
+        }
+
+        if (sum%sourceNum == 0) {
+            return sum/sourceNum;
+        }
+
+        return -1;
+
+    }
+
+
+    public static boolean isPrime(int a) {
+        //На вход поступает число, проверить, является ли оно простым
+        //Все числа целые
+        //Могут быть отрицательные числа и 0
+
+        //return IntStream.rangeClosed(2, (int) Math.sqrt(a)).anyMatch(i -> a % i == 0);
+        if (a < 2)
+            return false;
+
+        for (int i = 2; i <= Math.sqrt(a); i++) {
+            if (a%i == 0)
+                return false;
+        }
+
+        return true;
+
+    }
 }
