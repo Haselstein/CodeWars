@@ -59,8 +59,11 @@ public class CodeWars {
         System.out.println(playingWithDigits(695, 2));
         System.out.println(playingWithDigits(46288, 3));*/
 
-        for (int i = -5; i < 102; i++)
-            System.out.println("Number " + i + " is prime?: " + isPrime(i));
+        /*for (int i = -5; i < 102; i++)
+            System.out.println("Number " + i + " is prime?: " + isPrime(i));*/
+
+        System.out.println(sumDigPow(1, 100));
+
 
          
     }
@@ -488,4 +491,44 @@ public class CodeWars {
         return true;
 
     }
+
+
+    public static List<Long> sumDigPow(long a, long b) {
+        //На вход подаются границы области значений
+        //Нужно вернуть массив таких чисел, сумма цифр в степени их позиции в числе которых равна самому числу
+        //Например 89 = 8^1 + 9^2 -> искомое
+        //88 != 8^1 + 8^2 = 72 -> ненужное число
+
+        ArrayList<Long> result = new ArrayList<Long>();
+
+        for (long i = a; i <= b; i++) {
+            if (isEureka(i)) {
+                result.add(i);
+            }
+        }
+
+        return result;
+
+    }
+    public static boolean isEureka(long a) {
+
+        long sum = 0;
+        int i = (int) (Math.log10(a) + 1); //Количество цифр в числе
+        long sourceNum = a;
+
+        while (a > 0) {
+            sum += Math.pow((a%10), i);
+            a /= 10;
+            i--;
+        }
+
+        if (sum == sourceNum)
+            return true;
+
+        return false;
+
+    }
+
+
+
 }
