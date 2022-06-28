@@ -62,7 +62,9 @@ public class CodeWars {
         /*for (int i = -5; i < 102; i++)
             System.out.println("Number " + i + " is prime?: " + isPrime(i));*/
 
-        System.out.println(sumDigPow(1, 100));
+        //System.out.println(sumDigPow(1, 100));
+
+        System.out.println(sqInRect(3,7));
 
 
          
@@ -530,5 +532,28 @@ public class CodeWars {
     }
 
 
+    public static List<Integer> sqInRect(int lng, int wdth) {
 
+        List<Integer> array = new ArrayList<>();
+
+        while (lng > 0 && wdth > 0) {
+            if (lng > wdth) {
+                array.add(wdth);
+                lng -= wdth;
+
+            }
+            else if (lng < wdth) {
+                array.add(lng);
+                wdth -= lng;
+            }
+            else {
+                array.add(lng);
+                lng = 0;
+                wdth = 0;
+            }
+        }
+
+        return array;
+
+    }
 }
