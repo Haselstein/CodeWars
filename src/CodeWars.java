@@ -64,9 +64,19 @@ public class CodeWars {
 
         //System.out.println(sumDigPow(1, 100));
 
-        System.out.println(sqInRect(3,7));
+        //System.out.println(sqInRect(3,7));
 
-
+        int[] input = { 1, 2, 3, 4, 5 };
+        int[] a = foldArray(input, 6);
+        printMatrix(a);
+        /*int[] input1 = { 1, 2, 3, 4, 5 };
+        foldArray(input1, 2);
+        int[] input2 = { 1, 2, 3, 4, 5, 6 };
+        foldArray(input2, 2);
+        int[] input3 = { 1, 2, 3, 4, 5, 6, 7 };
+        foldArray(input3, 2);
+        int[] input4 = { -9, 9, -8, 8, 66, 23 };
+        foldArray(input4, 1);*/
          
     }
 
@@ -77,9 +87,11 @@ public class CodeWars {
         }
     }
     public static void printMatrix(int[] a) {
-        for (int element : a) {
+        for (int i = 0; i < a.length; i++)
+            System.out.println("Matrix[" + i + "] = " + a[i]);
+        /*for (int element : a) {
             System.out.println(element);
-        }
+        }*/
     }
 
 
@@ -533,6 +545,8 @@ public class CodeWars {
 
 
     public static List<Integer> sqInRect(int lng, int wdth) {
+        //На вход подаются длина и ширина прямоугольника
+        //Нужно вернуть массив квадратов, на которые можно разбить данный прямоугольник
 
         List<Integer> array = new ArrayList<>();
 
@@ -556,4 +570,38 @@ public class CodeWars {
         return array;
 
     }
+
+
+    public static int[] foldArray(int[] array, int runs) {
+        //"Сворачивание массива чисел"
+        //На вход подаётся массив чисел
+        //Нужно "сложить" пополам этот массив runs раз
+        //Например массив чисел от 1 до 5 и runs = 1:
+        // ([1, 2, 3, 4, 5], 1) -> [6, 6, 3]
+        /*Step 1         Step 2        Step 3       Step 4       Step5
+                             5/           5|         5\
+                            4/            4|          4\
+        1 2 3 4 5      1 2 3/         1 2 3|       1 2 3\       6 6 3
+                ----*----      ----*          ----*        ----*        ----**/
+
+        if (runs == 0 || array.length == 1)
+            return array;
+
+        int midleLengt = (int)Math.round(array.length/2.0);
+        int[] answer = new int[midleLengt];
+
+
+        for (int i = 0; i < midleLengt; i++) {
+            answer[i] = array[i] + array[array.length-1-i];
+        }
+
+        if (array.length %2 != 0)
+            answer[answer.length-1] = array[midleLengt-1];
+
+        return foldArray(answer, --runs);
+
+    }
+
+
+
 }
