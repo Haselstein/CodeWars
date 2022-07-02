@@ -1,4 +1,5 @@
 import java.security.DrbgParameters.Reseed;
+import java.time.temporal.Temporal;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -66,17 +67,11 @@ public class CodeWars {
 
         //System.out.println(sqInRect(3,7));
 
-        int[] input = { 1, 2, 3, 4, 5 };
-        int[] a = foldArray(input, 6);
-        printMatrix(a);
-        /*int[] input1 = { 1, 2, 3, 4, 5 };
-        foldArray(input1, 2);
-        int[] input2 = { 1, 2, 3, 4, 5, 6 };
-        foldArray(input2, 2);
-        int[] input3 = { 1, 2, 3, 4, 5, 6, 7 };
-        foldArray(input3, 2);
-        int[] input4 = { -9, 9, -8, 8, 66, 23 };
-        foldArray(input4, 1);*/
+        /*int[] input = { 1, 2, 3, 4, 5 };
+        int[] a = foldArray(input, 3);
+        printMatrix(a);*/
+
+        System.out.println(backwardsReadPrimes(2, 100));
          
     }
 
@@ -491,7 +486,22 @@ public class CodeWars {
     public static boolean isPrime(int a) {
         //На вход поступает число, проверить, является ли оно простым
         //Все числа целые
-        //Могут быть отрицательные числа и 0
+
+        //return IntStream.rangeClosed(2, (int) Math.sqrt(a)).anyMatch(i -> a % i == 0);
+        if (a < 2)
+            return false;
+
+        for (int i = 2; i <= Math.sqrt(a); i++) {
+            if (a%i == 0)
+                return false;
+        }
+
+        return true;
+
+    }
+    public static boolean isPrime(long a) {
+        //На вход поступает число, проверить, является ли оно простым
+        //Все числа целые
 
         //return IntStream.rangeClosed(2, (int) Math.sqrt(a)).anyMatch(i -> a % i == 0);
         if (a < 2)
@@ -601,6 +611,54 @@ public class CodeWars {
         return foldArray(answer, --runs);
 
     }
+
+
+    public static String backwardsReadPrimes(long start, long end) {
+        //Нахождение "обрытных" простых чисел в диапазоне от start до end
+        //Обратные простые - это такие простые числа, которые при обратном чтении (справа налево) дают простое число
+        //Например: start = 2, end = 100
+        //В этом диапазоне удовлетворять условиям будут такие простые числа:
+        //[13, 31, 17, 71, 37, 73, 79, 97]
+
+        ArrayList<String> answer = new ArrayList<String>();
+
+        for (long i = start; i <= end; i++) {
+            if (isPrime(i)) {
+                if (isBackwardPrime(i)) {
+                    answer.add(String.valueOf(i));
+                }
+            }
+        }
+
+        if (answer.size() < 1)
+            return "";
+
+        return answer.stream().reduce((x, y) -> x + " " + y).get().toString();
+
+    }
+    public static boolean isBackwardPrime(long value) {
+        //Метод проверки числа на обратное простое, на то, что это не однозначное число и на то, что это не палиндром
+
+        if (isPrime(inverse(value)) && value != inverse(value)) {
+            return true;
+        }
+
+        return false;
+
+    }
+    public static long inverse(long value) {
+        //Обратная запись числа
+
+        long result = 0;
+        while(value > 0) {
+            result = result * 10 + value % 10;
+            value /= 10;
+        }
+
+        return result;
+
+    }
+
 
 
 
