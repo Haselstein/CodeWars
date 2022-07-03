@@ -71,8 +71,13 @@ public class CodeWars {
         int[] a = foldArray(input, 3);
         printMatrix(a);*/
 
-        System.out.println(backwardsReadPrimes(2, 100));
-         
+        //System.out.println(backwardsReadPrimes(2, 100));
+
+        /*int[] a = { 1, 2, 3, 4, 6, 7, 8, 9, 10 };//Отсутствует 5
+        System.out.println(findMissingNumber(a));*/
+
+        System.out.println(looseChange(91));
+
     }
 
     public static void printMatrix(String[] a) {
@@ -659,6 +664,46 @@ public class CodeWars {
 
     }
 
+
+    public static int findMissingNumber(int[] numbers) {
+        //Найти пропавшее число в массиве numbers
+        //Этот массив состояит из последоательных уникальных чисел от 1 до n
+        //Но эти числа разбросаны по массиву
+        //Например:
+        //{ 3, 7, 1, 8, 5, 2, 4 } - > return 6
+
+        int sum = 0;
+
+        for (int i = 0; i <= numbers.length+1; i++)
+            sum += i;
+
+        return sum - Arrays.stream(numbers).sum();
+
+    }
+
+
+    public static HashMap<String, Integer> looseChange(int cent) {
+        //На вход подаётся количество центов
+        //Нужно произвести размен на монеты
+
+        HashMap<String, Integer> map = new HashMap<>();//Возможно можно сделать инициализацию сразу в ретёрне
+
+        map.put("Pennies", 0);
+        map.put("Nickels", 0);
+        map.put("Dimes", 0);
+        map.put("Quarters", 0);
+
+        if (cent <= 0)
+            return map;
+
+        map.put("Quarters", cent / 25);
+        map.put("Dimes", cent %25 / 10);
+        map.put("Nickels", cent %25 %10 / 5);
+        map.put("Pennies", cent %25 %10 %5);
+
+        return map;
+
+    }
 
 
 
