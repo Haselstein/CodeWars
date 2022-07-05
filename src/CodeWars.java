@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.security.DrbgParameters.Reseed;
 import java.time.temporal.Temporal;
 import java.util.*;
@@ -76,7 +77,9 @@ public class CodeWars {
         /*int[] a = { 1, 2, 3, 4, 6, 7, 8, 9, 10 };//Отсутствует 5
         System.out.println(findMissingNumber(a));*/
 
-        System.out.println(looseChange(91));
+        //System.out.println(looseChange(91));
+
+        System.out.println(perimeter(BigInteger.valueOf(7)));
 
     }
 
@@ -706,5 +709,49 @@ public class CodeWars {
     }
 
 
+    /*public static int perimeter(int n) {
+
+        if (n < 0)
+            return 0;
+
+        if (n <= 2)
+            return n;
+
+        int f_0 = 1;
+        int f_1 = 1;
+        int sum = 2;
+
+        for (int i = 3; i <= n+1; i++) {
+            int temp = f_0 + f_1;
+            f_0 = f_1;
+            f_1 = temp;
+            sum += f_1;
+        }
+
+        return sum*4;
+
+    }*/
+
+    public static BigInteger perimeter(BigInteger n) {
+        //Прямоугольник разбит на квадраты
+        //На вход подаётся количество квадратов
+        //Стороны квадратов равны последовательности чисел Фибоначчи
+        //Нужно посчитать периметр прямоугольника
+
+        BigInteger f_0 = BigInteger.valueOf(1);
+        BigInteger f_1 = BigInteger.valueOf(1);
+        BigInteger sum = f_0.add(f_1);
+        int l = n.intValue();
+
+        for (int i = 3; i <= l+1; i++) {
+            BigInteger temp = f_0.add(f_1);
+            f_0 = f_1;
+            f_1 = temp;
+            sum = sum.add(f_1);
+        }
+
+        return sum.multiply(BigInteger.valueOf(4));
+
+    }
 
 }
