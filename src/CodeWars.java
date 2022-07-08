@@ -752,21 +752,13 @@ public class CodeWars {
         long numberOne = fibonacci(n);
         long numberTwo = fibonacci(n+1);
         while (prod > numberOne * numberTwo) {
+            //Вместо вызова функции можно выполнять все действия здесь, что ускорит работу программы
             n++;
             numberOne = numberTwo;
             numberTwo = fibonacci(n);
         }
 
-        long[] answer = new long[3];
-        answer[0] = numberOne;
-        answer[1] = numberTwo;
-
-        if (answer[0] * answer[1] == prod)
-            answer[2] = 1;
-        else
-            answer[2] = 0;
-
-        return answer;
+        return new long[] { numberOne, numberTwo, numberOne * numberTwo == prod ? 1 : 0 };
 
     }
     public static long fibonacci(int n) {
