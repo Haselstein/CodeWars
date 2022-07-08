@@ -81,7 +81,7 @@ public class CodeWars {
 
         //System.out.println(perimeter(BigInteger.valueOf(7)));
 
-        printMatrix(productFib(5895));
+        printMatrix(productFib(4895));
 
     }
 
@@ -745,15 +745,22 @@ public class CodeWars {
         //Если число находится в границах между двумя произведениями чисел, то вернуть числа правой границы и 0
         /*Например:
         productFib(714) -> вернётся {21, 34, 1}, потому что 21 и 34 числа фибоначчи и их произведение равно 714
-        productFib(800) -> вернётся {34, 55, 0}, потому что 21*34 < 800 < 34*55 то же самое, что 714 < 800 < 1870*/
+        productFib(800) -> вернётся {34, 55, 0}, потому что 21*34 < 800 < 34*55 то же самое, что 714 < 800 < 1870
+        */
 
         int n = 1;
-        while (prod > fibonacci(n)*fibonacci(n+1))
+        long numberOne = fibonacci(n);
+        long numberTwo = fibonacci(n+1);
+        while (prod > numberOne * numberTwo) {
             n++;
+            numberOne = numberTwo;
+            numberTwo = fibonacci(n);
+        }
 
         long[] answer = new long[3];
-        answer[0] = fibonacci(n);
-        answer[1] = fibonacci(n+1);
+        answer[0] = numberOne;
+        answer[1] = numberTwo;
+
         if (answer[0] * answer[1] == prod)
             answer[2] = 1;
         else
