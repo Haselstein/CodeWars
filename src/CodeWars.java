@@ -79,7 +79,9 @@ public class CodeWars {
 
         //System.out.println(looseChange(91));
 
-        System.out.println(perimeter(BigInteger.valueOf(7)));
+        //System.out.println(perimeter(BigInteger.valueOf(7)));
+
+        printMatrix(productFib(5895));
 
     }
 
@@ -95,6 +97,10 @@ public class CodeWars {
         /*for (int element : a) {
             System.out.println(element);
         }*/
+    }
+    public static void printMatrix(long[] a) {
+        for (int i = 0; i < a.length; i++)
+            System.out.println("Matrix[" + i + "] = " + a[i]);
     }
 
 
@@ -709,29 +715,6 @@ public class CodeWars {
     }
 
 
-    /*public static int perimeter(int n) {
-
-        if (n < 0)
-            return 0;
-
-        if (n <= 2)
-            return n;
-
-        int f_0 = 1;
-        int f_1 = 1;
-        int sum = 2;
-
-        for (int i = 3; i <= n+1; i++) {
-            int temp = f_0 + f_1;
-            f_0 = f_1;
-            f_1 = temp;
-            sum += f_1;
-        }
-
-        return sum*4;
-
-    }*/
-
     public static BigInteger perimeter(BigInteger n) {
         //Прямоугольник разбит на квадраты
         //На вход подаётся количество квадратов
@@ -751,6 +734,52 @@ public class CodeWars {
         }
 
         return sum.multiply(BigInteger.valueOf(4));
+
+    }
+
+
+    public static long[] productFib(long prod) {
+        //На вход подаётся число
+        //Нужно высчитать произведение рядом стоящих чисел фибоначчи
+        //Если есть произведение, равное этому числу, то вернуть эти 2 рядом стоящих числа фибоначчи и 1
+        //Если число находится в границах между двумя произведениями чисел, то вернуть числа правой границы и 0
+        /*Например:
+        productFib(714) -> вернётся {21, 34, 1}, потому что 21 и 34 числа фибоначчи и их произведение равно 714
+        productFib(800) -> вернётся {34, 55, 0}, потому что 21*34 < 800 < 34*55 то же самое, что 714 < 800 < 1870*/
+
+        int n = 1;
+        while (prod > fibonacci(n)*fibonacci(n+1))
+            n++;
+
+        long[] answer = new long[3];
+        answer[0] = fibonacci(n);
+        answer[1] = fibonacci(n+1);
+        if (answer[0] * answer[1] == prod)
+            answer[2] = 1;
+        else
+            answer[2] = 0;
+
+        return answer;
+
+    }
+    public static long fibonacci(int n) {
+        //Функция нахождения n-го числа фибоначчи
+
+        long result = 1;
+
+        if (n <= 2)
+            return result;
+
+        long f_0 = 1;
+        long f_1 = 1;
+
+        for (int i = 3; i <= n; i++) {
+            result = f_0 + f_1;
+            f_0 = f_1;
+            f_1 = result;
+        }
+
+        return result;
 
     }
 
