@@ -5,6 +5,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.function.Function;
+
+import static java.lang.Math.max;
 import static java.util.stream.Collectors.*;
 
 
@@ -81,7 +83,12 @@ public class CodeWars {
 
         //System.out.println(perimeter(BigInteger.valueOf(7)));
 
-        printMatrix(productFib(4895));
+        //printMatrix(productFib(4895));
+
+        /*System.out.println("Normal test : " + sequence(new int[] {-2, 1, -3, 4, -1, 2, 1, -5, 4}));
+        System.out.println("Zero elements : " + sequence(new int[] {}));
+        System.out.println("One element : " + sequence(new int[] {5}));
+        System.out.println("All negative : " + sequence(new int[] {-2, -1, -3, -4, -1, -2, -1, -5, -4}));*/
 
     }
 
@@ -748,14 +755,13 @@ public class CodeWars {
         productFib(800) -> вернётся {34, 55, 0}, потому что 21*34 < 800 < 34*55 то же самое, что 714 < 800 < 1870
         */
 
-        int n = 1;
-        long numberOne = fibonacci(n);
-        long numberTwo = fibonacci(n+1);
+        long numberOne = 0;
+        long numberTwo = 1;
+        long temp;
         while (prod > numberOne * numberTwo) {
-            //Вместо вызова функции можно выполнять все действия здесь, что ускорит работу программы
-            n++;
+            temp = numberOne;
             numberOne = numberTwo;
-            numberTwo = fibonacci(n);
+            numberTwo += temp;
         }
 
         return new long[] { numberOne, numberTwo, numberOne * numberTwo == prod ? 1 : 0 };
@@ -782,4 +788,22 @@ public class CodeWars {
 
     }
 
+
+    public static int sequence(int[] arr) {
+        //Найти максимальную сумму последовательности чисел в массиве
+        //Если нет значений или все они отрицательны - вернуть 0
+
+        int sum = 0;
+        int maxSeq = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+
+            maxSeq = max(0, maxSeq + arr[i]);
+            sum = max(sum, maxSeq);
+
+        }
+
+        return sum;
+
+    }
 }
